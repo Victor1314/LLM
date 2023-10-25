@@ -1,42 +1,32 @@
-name: "llama2-7b-chat-gguf"
+name: "openllama-3b"
 
 description: |
-  Llama 2 7b chat in gguf format.
-  Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters.. 
+  OpenLLaMA, a permissively licensed open source reproduction of Meta AI’s LLaMA 7B trained on the RedPajama dataset 
 
-license: "https://ai.meta.com/llama/license/"
+license: "Apache 2.0"
 urls:
-- https://ai.meta.com/llama/
-- https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF
+- https://github.com/openlm-research/open_llama
 
 config_file: |
-  name: llama2-7b-chat-gguf
-  backend: "llama"
-  parameters:
-    top_k: 80
-    temperature: 0.2
-    top_p: 0.7
-  context_size: 4096
-  roles:
-    function: 'Function Result:'
-    assistant_function_call: 'Function Call:'
-    assistant: 'Assitant:'
-    user: 'User:'
-    system: 'System:'
-  template:
-    chat_message: llama2-7b-chat-gguf-chat
-  system_prompt: "You are a helpful assistant, below is a conversation, please respond with the next message and do not ask follow-up questions"
+    backend: llama
+    parameters:
+      model: open-llama-3b-q4_0.bin
+      top_k: 80
+      temperature: 0.2
+      top_p: 0.7
+    context_size: 1024
+    template:
+      completion: openllama-completion
+      chat: openllama-chat
+files:
+    - filename: "open-llama-3b-q4_0.bin"
+      sha256: "57f12972d25bae770e4f38a3f1d843d84c4444b59a9f6218e2a7ed4d63d3b2f9"
+      uri: "https://huggingface.co/SlyEcho/open_llama_3b_ggml/resolve/main/open-llama-3b-q4_0.bin"
 
 prompt_templates:
-- name: "llama2-7b-chat-gguf-chat"
+- name: "openllama-completion"
   content: |
-    [INST]
-    {{if .SystemPrompt}}<<SYS>>{{.SystemPrompt}}<</SYS>>{{end}}
-    {{if .Input}}{{.Input}}{{end}}
-    [/INST] 
-
-    Assistant: 
-files:
-- filename: "llama-2-7b-chat.Q4_K_M.gguf"
-  sha256: "08a5566d61d7cb6b420c3e4387a39e0078e1f2fe5f055f3a03887385304d4bfa"
-  uri: "http://192.168.130.80:8000/llama-2-7b-chat.Q4_K_M.gguf"
+      Q: Complete the following text: {{.Input}}\nA: 
+- name: "openllama-chat"
+  content: |
+    Q: {{.Input}}\nA: 
