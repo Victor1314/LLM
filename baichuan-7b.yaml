@@ -21,7 +21,7 @@ config_file: |
 files:
     - filename: "baichuan-vicuna-7b.ggmlv3.q4_0.bin"
       sha256: "d7c12bccc40098830a18d2f3a42020d243396d240b6020a0f2daace6b203d444"
-      uri: "https://huggingface.co/TheBloke/baichuan-vicuna-7B-GGML/resolve/main/baichuan-vicuna-7b.ggmlv3.q4_0.bin"
+      uri: "http://192.168.130.80:8000/baichuan-vicuna-7b.ggmlv3.q4_0.bin"
 
 prompt_templates:
 - name: "baichuan-completion"
